@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .txt {
+            font-size: 30px;
+        }
+
+        .cadastro {
+            color: rgb(0, 207, 0);
+            border: solid rgb(207, 207, 207);
+            background-color: rgb(207, 207, 207);
+            border-radius: 20px;
+            padding-left: 10px;
+        }
+
+        .atualizar {
+            color: rgb(1, 82, 213);
+            margin-top: 15px;
+            border: solid rgb(207, 207, 207);
+            background-color: rgb(207, 207, 207);
+            border-radius: 20px;
+            padding-left: 10px;
+        }
+
+        .excluir {
+            color: rgb(213, 1, 1);
+            margin-top: 15px;
+            border: solid rgb(207, 207, 207);
+            background-color: rgb(207, 207, 207);
+            border-radius: 20px;
+            padding-left: 10px;
+        }
+
+        .linha {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .linha label {
+            width: 150px;
+        }
+
+        .campo {
+            width: 300px;
+            height: 40px;
+        }
+
+        .botaoCadastro {
+            border-radius: 15px;
+            background-color: rgb(88, 255, 88);
+            border-color: rgb(0, 163, 0);
+            font-size: 25px;
+        }
+
+        .botaoAtualizar {
+            border-radius: 15px;
+            background-color: rgb(45, 133, 255);
+            border-color: rgb(1, 82, 213);
+            font-size: 25px;
+        }
+
+        .botaoExcluir {
+            border-radius: 15px;
+            background-color: rgb(255, 45, 45);
+            border-color: rgb(213, 1, 1);
+            font-size: 25px;
+        }
+        #botaoVoltar {
+            border-radius: 15px;
+            background-color: rgb(24, 24, 24);
+            border-color: black;
+        }
+        #voltar {
+            color: aliceblue;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body class="container p-5 my-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Clientes</h1>
+    </div>
+
+    <div class="txt">
+
+        <p class="cadastro">Cadastro de Clientes</p>
+
+        <div class="inputs">
+
+            <div class="linha">
+                <label>Nome:</label>
+                <input type="text" id="txtNomeCadastro" class="campo">
+            </div>
+
+            <div class="linha">
+                <label>Telefone:</label>
+                <input type="text" id="telefoneCadastro" class="campo">
+            </div>
+
+        </div>
+
+        <button id="cadastroButton" class="botaoCadastro">
+            Cadastre Aqui
+        </button>
+
+    </div>
+
+
+    <div class="txt">
+
+        <p class="atualizar">Atualizacao de Clientes</p>
+
+        <div class="inputs">
+
+            <div class="linha">
+                <label>Id Cliente:</label>
+                <input type="number" id="idClienteAtualizar" class="campo">
+            </div>
+
+            <div class="linha">
+                <label>Nome:</label>
+                <input type="text" id="txtNomeAtualizar" class="campo">
+            </div>
+
+            <div class="linha">
+                <label>Telefone:</label>
+                <input type="text" id="telefoneAtualizar" class="campo">
+            </div>
+
+        </div>
+
+        <button id="atualizarButton" class="botaoAtualizar">
+            Atualize Aqui
+        </button>
+
+    </div>
+
+
+    <div class="txt">
+
+        <p class="excluir">Excluir de Clientes</p>
+
+        <div class="inputs">
+
+            <div class="linha">
+                <label>Id Cliente:</label>
+                <input type="number" id="idClienteExcluir" class="campo">
+            </div>
+        </div>
+
+        <button id="excluirButton" class="botaoExcluir">
+            Exclua Aqui
+        </button>
+
+    </div>
+
+    <button class="mt-2" id="botaoVoltar">
+        <a href="dashboard.html" class="container" id="voltar">Voltar</a>
+    </button>
+
+
+    <script type="module">
+        import ApiService from './ApiService.js';
+        const api = new ApiService("token sendo gerado");
+        const resposta = await api.get("/clientes");
+
+
+
+        // cadastro
+
+
+        const txtNomeCadastro = document.getElementById("txtNomeCadastro");
+
+        const txtTelefoneCadastro =  document.getElementById("telefoneCadastro");
+
+        const btnCadastrar = document.getElementById("cadastroButton");
+
+        // atualizar
+
+        const txtIdClienteAtualizar = document.getElementById("idClienteAtualizar");
+
+        const txtNomeAtualizar = document.getElementById("txtNomeAtualizar");
+
+        const txtTelefoneAtualizar = document.getElementById("telefoneAtualizar");
+
+        const btnAtualizar = document.getElementById("atualizarButton");
+
+        // excluir
+
+        const txtIdClienteExcluir = document.getElementById("idClienteExcluir");
+
+        const btnExcluir = document.getElementById("excluirButton");
+
+        btnCadastrar.onclick = async function () {
+
+            const dadosClienteCadastro = {
+                cliente: {
+                    nomeCliente: txtNomeCadastro.value.trim(),
+                    telefoneCliente: txtTelefoneCadastro.value.trim()
+                }
+            };
+
+            const respostaAPICadastro = await api.post(
+                "/clientes",
+                dadosClienteCadastro
+            );
+
+            console.log(respostaAPICadastro);
+
+            if (respostaAPICadastro.success == true) {
+                alert("Cadastrado com sucesso! ID: " +
+                    respostaAPICadastro.data.clientes[0].idCliente
+                );
+            } else {
+                alert(respostaAPICadastro.message);
+            }
+        };
+        
+        btnAtualizar.onclick = async function () {
+
+            const dadosClienteAtualizar = {
+                cliente: {
+                    nomeCliente: txtNomeAtualizar.value.trim(),
+                    telefoneCliente: txtTelefoneAtualizar.value.trim()
+                }
+            };
+
+            const id = txtIdClienteAtualizar.value.trim();
+
+            const respostaAPIAtualizar = await api.put(
+                "/clientes",
+                id,
+                dadosClienteAtualizar
+            );
+
+            console.log(respostaAPIAtualizar);
+
+            if (respostaAPIAtualizar.success == true) {
+                alert("Cliente atualizado com sucesso");
+            } else {
+                alert(respostaAPIAtualizar.message);
+            }
+        };
+        
+        btnExcluir.onclick = async function () {
+
+            const id = txtIdClienteExcluir.value.trim();
+
+            const respostaAPIExcluir = await api.delete(
+                "/clientes",
+                id
+            );
+            console.log(respostaAPIExcluir);
+            if (respostaAPIExcluir.success == true) {
+                alert("Cliente excluido com sucesso")
+            } else {
+                alert(respostaAPIAtualizar.message);
+            }
+        };
+
+
+
+    </script>
+
+</body>
+</html>

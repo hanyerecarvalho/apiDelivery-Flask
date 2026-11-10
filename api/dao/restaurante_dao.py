@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from api.model.Restaurantes import Restaurante
 
-class RestaurantesDAO:
+class RestauranteDAO:
     def __init__(self, database_dependency):
         print("⬆️  RestaurantesDAO.__init__()")
         self.__database = database_dependency  

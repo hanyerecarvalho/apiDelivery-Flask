@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from api.model.Pedidos import Pedidos
 
-class PedidosDAO:
+class PedidoDAO:
     def __init__(self, database_dependency):
         print("⬆️  PedidosDAO.__init__()")
         self.__database = database_dependency  

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto Helio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .login {
+            text-align: center;
+        }
+
+        .login2 {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .input {
+            width: 190px;
+            height: 30px;
+            border-radius: 20px;
+            box-sizing: border-box;
+            border-style: solid;
+        }
+
+        .campo-senha {
+            position: relative;
+            width: 190px;
+            margin: 0 auto;
+        }
+
+        .campo-senha button {
+            position: absolute;
+            right: -45px;
+            top: 0;
+            height: 30px;
+        }
+        .botao {
+            border-radius: 20px;
+        }
+        .botao2 {
+            border-radius: 20px;
+            margin: 15px;
+            border-style: double;
+            color: rgb(0, 0, 0);
+            background-color: rgb(230, 228, 228);
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+
+        <h1 class="login2">Login</h1>
+
+        <form id="formLogin">
+
+        <div class="login">
+            <p class="m-0"><b>Email:</b></p>
+            <input type="email" class="input" placeholder=" Email" id="email" required>
+
+            <p class="m-0 mt-3"><b>Senha:</b></p>
+
+            <div class="campo-senha">
+                <input type="password" class="input" id="senha" placeholder=" Senha" required>
+            </div>
+            <div id="botoes"></div>
+
+            <p id="msg" class="m-3"></p>
+        </div>
+
+        <p id="msg" class="m-3"></p>
+    </div>
+        </form>
+<script type="module">
+    import ApiService from './ApiService.js';
+
+    const api = new ApiService();
+
+    const txtUsuario = document.getElementById("email");
+    const txtSenha = document.getElementById("senha");
+
+    const divBotoes = document.getElementById("botoes");
+    const divResposta = document.getElementById("msg");
+
+
+    function createButton(text, className) {
+        const btn = document.createElement("button");
+        btn.textContent = text;
+        btn.className = `btn ${className} me-2 mb-2 my-2`;
+        btn.type = "button";
+        return btn;
+    }
+
+
+    const btnLogin = createButton("Login", "btn-primary");
+
+    btnLogin.onclick = async function btnLogin_click() {
+        
+        if (txtUsuario.value.trim() == "") {
+            divResposta.textContent = "Usuário Inválido";
+            divResposta.className = "alert alert-danger";
+            return;
+        }
+        if (txtSenha.value.trim() == "") {
+            divResposta.textContent = "Senha Inválida";
+            divResposta.className = "alert alert-danger";
+            return;
+        }
+
+
+        const dadosLogin = {
+            login: {
+                emailUsuario: txtUsuario.value.trim(),
+                senhaUsuario: txtSenha.value.trim()
+            }
+        };
+
+
+        const respostaAPI = await api.post(
+            "/usuario/login",
+            dadosLogin
+        );
+
+        console.log("RESPOSTA DO LOGIN:", respostaAPI);
+
+        if (respostaAPI.success == true) {
+
+            const token = respostaAPI.data.token;
+
+            api.token = token;
+            window.location.href = "dashboard.html";
+
+        } else {
+
+            divResposta.textContent = "Usuário ou senha inválidos";
+            divResposta.className = "alert alert-danger";
+        }
+    };
+
+    divBotoes.appendChild(btnLogin);
+
+</script>
+
+</body>
+</html>
