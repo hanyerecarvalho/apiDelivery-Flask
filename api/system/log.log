@@ -1,0 +1,69 @@
+[2026-11-12T17:07:17.734804] [ERROR]
+405 Method Not Allowed: The method is not allowed for the requested URL.
+--------------------------------------------------------------------------------
+[2026-11-12T17:13:26.848235] [ERROR]
+nomeCliente deve ter pelo menos 3 caracteres.
+--------------------------------------------------------------------------------
+[2026-11-12T17:13:33.481843] [ERROR]
+Not all parameters were used in the SQL statement
+--------------------------------------------------------------------------------
+[2026-11-12T17:14:08.766145] [ERROR]
+Not all parameters were used in the SQL statement
+--------------------------------------------------------------------------------
+[2026-11-12T17:14:43.732947] [ERROR]
+Not all parameters were used in the SQL statement
+--------------------------------------------------------------------------------
+[2026-11-12T17:14:44.230344] [ERROR]
+Not all parameters were used in the SQL statement
+--------------------------------------------------------------------------------
+[2026-11-12T17:14:44.629165] [ERROR]
+Not all parameters were used in the SQL statement
+--------------------------------------------------------------------------------
+[2026-11-12T17:15:03.334179] [ERROR]
+Not all parameters were used in the SQL statement
+--------------------------------------------------------------------------------
+[2026-11-12T17:15:11.734132] [ERROR]
+Not all parameters were used in the SQL statement
+--------------------------------------------------------------------------------
+[2026-11-12T17:17:54.255747] [ERROR]
+1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'nomeCliente = 'Teste ef4e255d77', telefoneCliente = '11999990102' WHERE idCli...' at line 1
+--------------------------------------------------------------------------------
+[2026-11-12T17:18:07.089864] [ERROR]
+ClienteControl.show() takes 1 positional argument but 2 were given
+--------------------------------------------------------------------------------
+[2026-11-12T17:20:25.971490] [ERROR]
+Not all parameters were used in the SQL statement
+--------------------------------------------------------------------------------
+[2026-11-12T17:21:43.739177] [ERROR]
+1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`delivery`.`pedidos`, CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `clientes` (`idCliente`) ON DELETE CASCADE)
+--------------------------------------------------------------------------------
+[2026-11-12T17:22:03.125003] [ERROR]
+1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`delivery`.`pedidos`, CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `clientes` (`idCliente`) ON DELETE CASCADE)
+--------------------------------------------------------------------------------
+[2026-11-12T17:22:03.664056] [ERROR]
+1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`delivery`.`pedidos`, CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `clientes` (`idCliente`) ON DELETE CASCADE)
+--------------------------------------------------------------------------------
+[2026-11-12T17:22:03.898470] [ERROR]
+1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`delivery`.`pedidos`, CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `clientes` (`idCliente`) ON DELETE CASCADE)
+--------------------------------------------------------------------------------
+[2026-11-12T17:22:08.477154] [ERROR]
+1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`delivery`.`pedidos`, CONSTRAINT `pedidos_ibfk_2` FOREIGN KEY (`idRestaurante`) REFERENCES `restaurantes` (`idRestaurante`) ON DELETE CASCADE)
+--------------------------------------------------------------------------------
+[2026-11-12T17:22:58.840102] [ERROR]
+[404] Cliente não encontrado | Detalhes: {'message': 'Cliente não encontrado'}
+--------------------------------------------------------------------------------
+[2026-11-12T17:22:58.843659] [ERROR]
+[404] Cliente não encontrado | Detalhes: {'message': 'Cliente não encontrado'}
+--------------------------------------------------------------------------------
+[2026-11-12T17:22:58.847118] [ERROR]
+[404] Restaurante não encontrado | Detalhes: {'message': 'Restaurante não encontrado'}
+--------------------------------------------------------------------------------
+[2026-11-12T17:22:58.850946] [ERROR]
+[404] Restaurante não encontrado | Detalhes: {'message': 'Restaurante não encontrado'}
+--------------------------------------------------------------------------------
+[2026-11-12T17:24:35.332812] [ERROR]
+[404] Cliente não encontrado | Detalhes: {'message': 'Cliente não encontrado'}
+--------------------------------------------------------------------------------
+[2026-11-12T17:24:43.281981] [ERROR]
+[404] Restaurante não encontrado | Detalhes: {'message': 'Restaurante não encontrado'}
+--------------------------------------------------------------------------------

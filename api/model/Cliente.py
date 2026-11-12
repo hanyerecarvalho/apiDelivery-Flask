@@ -1,55 +1,55 @@
 # -*- coding: utf-8 -*-
 
-class Restaurante:
+class Cliente:
     def __init__(self):
-        self.__idRestaurante = None
-        self.__nomeRestaurante = None
-        self.__telefoneRestaurante = None
+        self.__idCliente = None
+        self.__nomeCliente = None
+        self.__telefoneCliente = None
 
     @property
-    def idRestaurante(self):
+    def idCliente(self):
 
-        return self.__idRestaurante
+        return self.__idCliente
 
-    @idRestaurante.setter
-    def idRestaurante(self, value):
+    @idCliente.setter
+    def idCliente(self, value):
         try:
             parsed = int(value)
         except (ValueError, TypeError):
-            raise ValueError("idRestaurante deve ser um número inteiro.")
+            raise ValueError("idCliente deve ser um número inteiro.")
 
         if parsed <= 0:
-            raise ValueError("idRestaurante deve ser maior que zero.")
+            raise ValueError("idCliente deve ser maior que zero.")
 
-        self.__idRestaurante = parsed
+        self.__idCliente = parsed
 
     @property
-    def nomeRestaurante(self):
+    def nomeCliente(self):
 
-        return self.__nomeRestaurante
+        return self.__nomeCliente
 
-    @nomeRestaurante.setter
-    def nomeRestaurante(self, value):
+    @nomeCliente.setter
+    def nomeCliente(self, value):
         if not isinstance(value, str):
-            raise ValueError("nomeRestaurante deve ser uma string.")
+            raise ValueError("nomeCliente deve ser uma string.")
 
         nome = value.strip()
         if len(nome) < 3:
-            raise ValueError("nomeRestaurante deve ter pelo menos 3 caracteres.")
+            raise ValueError("nomeCliente deve ter pelo menos 3 caracteres.")
 
-        self.__nomeRestaurante = nome
+        self.__nomeCliente = nome
 
     @property
-    def telefoneRestaurante(self):
-        return self.__telefoneRestaurante
+    def telefoneCliente(self):
+        return self.__telefoneCliente
 
-    @telefoneRestaurante.setter
-    def telefoneRestaurante(self, value):
+    @telefoneCliente.setter
+    def telefoneCliente(self, value):
         if not isinstance(value, str):
-            raise ValueError("telefoneRestaurante deve ser uma string")
+            raise ValueError("telefoneCliente deve ser uma string")
 
         telefone = value.strip()
         if len(telefone) < 3:
-            raise ValueError("telefoneRestaurante deve ter mais de 3 caracteres")
+            raise ValueError("telefoneCliente deve ter mais de 3 caracteres")
 
-        self.__telefoneRestaurante = telefone
+        self.__telefoneCliente = telefone

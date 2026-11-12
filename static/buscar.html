@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>Buscar registros</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"></head>
+<body class="container py-4">
+    <a href="dashboard.html">Voltar ao painel</a>
+    <h1 class="my-3">Buscar registros</h1>
+    <p>Escolha o cadastro e use o campo de filtro da tabela.</p>
+    <div class="list-group">
+        <a class="list-group-item" href="clientes.html#filtro">Clientes</a>
+        <a class="list-group-item" href="restaurantes.html#filtro">Restaurantes</a>
+        <a class="list-group-item" href="pedidos.html#filtro">Pedidos</a>
+    </div>
+    <script type="module">
+        import { verificarLogin } from "./js/auth.js";
+        verificarLogin();
+    </script>
+</body>
+</html>

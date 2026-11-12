@@ -96,5 +96,5 @@ class RestauranteControl:
         return jsonify({
             "success": True,
             "message": "Excluído com sucesso"
-        }), 204
+        }), 200
         

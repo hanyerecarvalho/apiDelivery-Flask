@@ -15,14 +15,14 @@ class ClienteRoteador:
         self.__blueprint = Blueprint('cliente', __name__)
 
     def create_routes(self):
-        @self.__blueprint.route('/', methods=['POST'])
+        @self.__blueprint.route('/', strict_slashes=False, methods=['POST'])
         @self.__jwt_middleware.validate_token  # valida token JWT antes de executar
         @self.__cliente_middleware.validate_body  # valida corpo da requisição
         def store():
             return self.__cliente_control.store()
 
         # GET / -> lista todos os cargos
-        @self.__blueprint.route('/', methods=['GET'])
+        @self.__blueprint.route('/', strict_slashes=False, methods=['GET'])
         @self.__jwt_middleware.validate_token  # valida token JWT
         def index():
             """
@@ -40,7 +40,7 @@ class ClienteRoteador:
 
             :param idCargo: int - ID do cargo vindo da URI.
             """
-            return self.__cliente_control.show(idCliente)
+            return self.__cliente_control.show()
 
         # PUT /<idCargo> -> atualiza um cargo
         @self.__blueprint.route('/<int:idCliente>', methods=['PUT'])

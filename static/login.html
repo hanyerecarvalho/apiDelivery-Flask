@@ -18,7 +18,7 @@
         }
 
         .input {
-            width: 191px;
+            width: 190px;
             height: 30px;
             border-radius: 20px;
             box-sizing: border-box;
@@ -112,25 +112,25 @@
 
 
         const dadosLogin = {
-            login: {
-                emailUsuario: txtUsuario.value.trim(),
-                senhaUsuario: txtSenha.value.trim()
+            funcionario: {
+                email: txtUsuario.value.trim(),
+                senha: txtSenha.value
             }
         };
 
 
         const respostaAPI = await api.post(
-            "/usuario/login",
+            "/api/v1/funcionarios/login",
             dadosLogin
         );
 
-        console.log("RESPOSTA DO LOGIN:", respostaAPI);
+        
 
-        if (respostaAPI.success == true) {
+        if (respostaAPI && respostaAPI.success == true) {
 
             const token = respostaAPI.data.token;
 
-            api.token = token;
+            localStorage.setItem("jwt", token);
             window.location.href = "dashboard.html";
 
         } else {

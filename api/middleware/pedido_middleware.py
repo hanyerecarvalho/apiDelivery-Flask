@@ -5,10 +5,10 @@ from api.utils.error_response import ErrorResponse
 
 class PedidoMiddleware:
 
-    def validate_create_body(self, f):
+    def validate_body(self, f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
-            print("🔷 PedidoMiddleware.validate_create_body()")
+            print("🔷 PedidoMiddleware.validate_body()")
             body = request.get_json()
             
             if not body or 'pedido' not in body:

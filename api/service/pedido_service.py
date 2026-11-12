@@ -4,10 +4,19 @@ from api.model.Pedidos import Pedidos
 from api.utils.error_response import ErrorResponse
 
 class PedidoService:
-    def __init__(self, pedido_dao_dependency: PedidoDAO):
+    def __init__(self, pedido_dao_dependency: PedidoDAO, cliente_dao_dependency, restaurante_dao_dependency):
 
         print("⬆️  PedidoService.__init__()")
         self.__pedidoDAO = pedido_dao_dependency 
+
+        self.__clienteDAO = cliente_dao_dependency
+        self.__restauranteDAO = restaurante_dao_dependency
+
+    def __validar_referencias(self, pedido):
+        if not self.__clienteDAO.findById(pedido.idCliente):
+            raise ErrorResponse(404, "Cliente não encontrado", {"message": "Cliente não encontrado"})
+        if not self.__restauranteDAO.findById(pedido.idRestaurante):
+            raise ErrorResponse(404, "Restaurante não encontrado", {"message": "Restaurante não encontrado"})
 
     def createPedido(self, pedidoBodyRequest: dict) -> int:
         print("🟣 PedidoService.createPedido()")
@@ -17,7 +26,8 @@ class PedidoService:
         pedido.idCliente = pedidoBodyRequest.get("idCliente")
         pedido.idRestaurante = pedidoBodyRequest.get("idRestaurante")
 
-        return  self.__pedidoDAO.create(pedido)
+        self.__validar_referencias(pedido)
+        return self.__pedidoDAO.create(pedido)
 
     def findAll(self) -> list[dict]:
         print("🟣 PedidoService.findAll()")
@@ -41,6 +51,7 @@ class PedidoService:
         pedido.idCliente = jsonPedido.get("idCliente")
         pedido.idRestaurante = jsonPedido.get("idRestaurante")
 
+        self.__validar_referencias(pedido)
         return self.__pedidoDAO.update(pedido)
 
     def deletePedido(self, idPedido: int) -> bool:

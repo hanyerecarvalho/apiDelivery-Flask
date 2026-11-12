@@ -7,7 +7,11 @@ from api.database.mysql_database import MysqlDatabase
 from api.utils.error_response import ErrorResponse
 from api.utils.logger import Logger
 
-from api.middleware.jwt_middleware import JwtMiddleware
+from api.middleware.jwt_middleware import JwtMiddleware, MeuTokenJWT
+from api.dao.funcionario_dao import FuncionarioDAO
+from api.service.funcionario_service import FuncionarioService
+from api.control.funcionario_control import FuncionarioControl
+from api.router.funcionario_roteador import FuncionarioRoteador
 from api.middleware.cliente_middleware import ClienteMiddleware
 from api.middleware.pedido_middleware import PedidoMiddleware
 from api.middleware.restaurante_middleware import RestauranteMiddleware
@@ -60,6 +64,7 @@ class Server:
         self.__db_connection = None
 
     def init(self):
+        MeuTokenJWT()
         self.__before_routing()
 
         self.__db_connection = MysqlDatabase(
@@ -74,13 +79,20 @@ class Server:
 
         self.__db_connection.connect()
 
+        self.__setup_funcionario()
         self.__setup_cliente()
 
-        self.__setup_pedido()
-        
         self.__setup_restaurante()
+        self.__setup_pedido()
 
         self.__error_middleware()
+
+    def __setup_funcionario(self):
+        dao = FuncionarioDAO(self.__db_connection)
+        service = FuncionarioService(dao)
+        control = FuncionarioControl(service)
+        router = FuncionarioRoteador(control)
+        self.__app.register_blueprint(router.create_routes(), url_prefix="/api/v1/funcionarios")
 
     def __setup_cliente(self):
         print("⬆️  Setup Cliente:server")
@@ -107,7 +119,7 @@ class Server:
         if self.__pedido_dao is None:
             self.__pedido_dao = PedidoDAO(self.__db_connection)
 
-        self.__pedido_service = PedidoService(self.__pedido_dao, self.__cliente_dao)
+        self.__pedido_service = PedidoService(self.__pedido_dao, self.__cliente_dao, self.__restaurante_dao)
 
         self.__pedido_control = PedidoControl(self.__pedido_service)
 
@@ -127,7 +139,7 @@ class Server:
         if self.__restaurante_dao is None:
             self.__restaurante_dao = RestauranteDAO(self.__db_connection)
             
-        self.__restaurante_service = RestauranteService(self.__restaurante_dao, self.__pedido_dao, self.__cliente_dao)
+        self.__restaurante_service = RestauranteService(self.__restaurante_dao)
         
         self.__restaurante_control = RestauranteControl(self.__restaurante_service)
         
@@ -190,5 +202,5 @@ class Server:
             return jsonify(resposta), 500
 
     def run(self):
-        print(f"🚀 Servidor rodando em: http://127.0.0.1:{self.__porta}/Login.html")
+        print(f"🚀 Servidor rodando em: http://127.0.0.1:{self.__porta}/login.html")
         self.__app.run(port=self.__porta, debug=False)

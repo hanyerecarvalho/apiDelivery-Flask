@@ -22,6 +22,11 @@ export default class ApiService {
     async simpleGet(uri) {
         try {
             const response = await fetch(uri);            // Faz a requisição HTTP GET
+            if (response.status === 401 && this.#token) {
+                localStorage.removeItem("jwt");
+                window.location.href = "login.html";
+                return null;
+            }
             const jsonObj = await response.json();        // Converte a resposta para JSON
             console.log("GET:", uri, jsonObj);             // Log para depuração
             return jsonObj;                                // Retorna o JSON obtido
@@ -56,6 +61,11 @@ export default class ApiService {
                 headers: headers
             });
 
+            if (response.status === 401 && this.#token) {
+                localStorage.removeItem("jwt");
+                window.location.href = "login.html";
+                return null;
+            }
             const jsonObj = await response.json();   // Converte resposta para JSON
             console.log("GET:", uri, jsonObj);       // Log para depuração
             return jsonObj;                           // Retorna JSON da resposta
@@ -96,6 +106,11 @@ export default class ApiService {
                 throw new Error(`Erro HTTP: ${response.status}`);
             }
 
+            if (response.status === 401 && this.#token) {
+                localStorage.removeItem("jwt");
+                window.location.href = "login.html";
+                return null;
+            }
             const jsonObj = await response.json();
             console.log("GET BY ID:", fullUri, jsonObj);
             return jsonObj;
@@ -130,8 +145,13 @@ export default class ApiService {
                 body: JSON.stringify(jsonObject)
             });
 
+            if (response.status === 401 && this.#token) {
+                localStorage.removeItem("jwt");
+                window.location.href = "login.html";
+                return null;
+            }
             const jsonObj = await response.json();
-            console.log("POST:", uri, jsonObj);
+            
             return jsonObj;
 
         } catch (error) {
@@ -167,6 +187,11 @@ export default class ApiService {
                 body: JSON.stringify(jsonObject)
             });
 
+            if (response.status === 401 && this.#token) {
+                localStorage.removeItem("jwt");
+                window.location.href = "login.html";
+                return null;
+            }
             const jsonObj = await response.json();
             console.log("PUT:", fullUri, jsonObj);
             return jsonObj;
@@ -203,12 +228,14 @@ export default class ApiService {
                 headers: headers
             });
 
-            // Verifica sucesso da resposta
-            if (!response.ok) {
-                throw new Error(`Erro HTTP: ${response.status}`);
-            }
+
 
             // Tenta converter resposta para JSON, mas se falhar retorna null
+            if (response.status === 401 && this.#token) {
+                localStorage.removeItem("jwt");
+                window.location.href = "login.html";
+                return null;
+            }
             const jsonObj = await response.json().catch(() => null);
             console.log("DELETE:", fullUri, jsonObj);
             return jsonObj;
@@ -235,3 +262,4 @@ export default class ApiService {
         this.#token = value;
     }
 }
+

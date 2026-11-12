@@ -7,7 +7,7 @@ class PedidoDAO:
         self.__database = database_dependency  
 
     def create(self, objPedidos: Pedidos) -> int:
-        SQL = "INSERT INTO pedidos ( valorTotal, idCliente, idRestaurante) VALUES (%s);"
+        SQL = "INSERT INTO pedidos ( valorTotal, idCliente, idRestaurante) VALUES (%s, %s, %s);"
         params = (objPedidos.valorTotal,objPedidos.idCliente, objPedidos.idRestaurante)
 
         with self.__database.get_connection() as conn:
@@ -35,7 +35,7 @@ class PedidoDAO:
         return affected > 0
 
     def update(self, objPedidos: Pedidos) -> bool:
-        SQL = "UPDATE pedidos SET valorTotal, idCliente, idRestaurante = %s WHERE idPedido = %s;"
+        SQL = "UPDATE pedidos SET valorTotal = %s, idCliente = %s, idRestaurante = %s WHERE idPedido = %s;"
         params = (objPedidos.valorTotal, objPedidos.idCliente, objPedidos.idRestaurante, objPedidos.idPedido)
 
         with self.__database.get_connection() as conn:
@@ -78,3 +78,4 @@ class PedidoDAO:
 
         print("✅ PedidosDAO.findByField()")
         return resultados
+

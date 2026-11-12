@@ -26,8 +26,8 @@
             Restaurantes
         </a>
 
-        <a class="list-group-item list-group-item-action" href="produtos.html">
-            Produtos
+        <a class="list-group-item list-group-item-action" href="pedidos.html">
+            Pedidos
         </a>
     </div>
 
@@ -39,9 +39,15 @@
         </a>
     </div>
 
-    <script>
-        
-    </script>
+    <button id="sair" type="button" class="btn btn-outline-secondary mt-4">Sair</button>
+<script type="module">
+    import { verificarLogin } from "./js/auth.js";
+    verificarLogin();
+    document.getElementById("sair").onclick = () => {
+        localStorage.removeItem("jwt");
+        window.location.href = "login.html";
+    };
+</script>
 
 </body>
 </html>

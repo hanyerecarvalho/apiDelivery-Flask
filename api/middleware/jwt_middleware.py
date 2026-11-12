@@ -1,3 +1,5 @@
+import os
+from pathlib import Path
 import jwt
 import time
 import secrets
@@ -9,12 +11,18 @@ class MeuTokenJWT:
     """Classe para gerar e validar tokens JWT"""
     
     def __init__(self):
-        self._key = "x9S4q0v+V0IjvHkG20uAxaHx1ijj+q1HWjHKv+ohxp/oK+77qyXkVj/l4QYHHTF3"
+        self._key = os.environ.get("FLASK_JWT_SECRET")
+        if not self._key:
+            arquivo = Path(__file__).resolve().parents[2] / ".jwt-secret"
+            if arquivo.is_file():
+                self._key = arquivo.read_text(encoding="utf-8").strip()
+        if not self._key or len(self._key) < 32:
+            raise RuntimeError("Configure FLASK_JWT_SECRET ou o arquivo .jwt-secret.")
         self._alg = "HS256"
         self._iss = "http://localhost"
         self._aud = "http://localhost"
         self._sub = "acesso_sistema"
-        self._duracao_token = 3600 * 24 * 60  # 60 dias em segundos
+        self._duracao_token = 3600  # Uma hora
         self._payload = None
 
     @property

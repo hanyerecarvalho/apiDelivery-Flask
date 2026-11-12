@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+from math import isfinite
+
 
 class Pedidos:
     def __init__(self):
@@ -7,38 +8,35 @@ class Pedidos:
         self.__idCliente = None
         self.__idRestaurante = None
 
+    @staticmethod
+    def __validar_id(value, campo):
+        if isinstance(value, bool) or not isinstance(value, (int, str)):
+            raise ValueError(f"{campo} deve ser um inteiro positivo.")
+        numero = int(value)
+        if numero <= 0:
+            raise ValueError(f"{campo} deve ser um inteiro positivo.")
+        return numero
+
     @property
     def idPedido(self):
-
         return self.__idPedidos
 
     @idPedido.setter
     def idPedido(self, value):
-        try:
-            parsed = int(value)
-        except (ValueError, TypeError):
-            raise ValueError("idPedido deve ser um número inteiro.")
-
-        if parsed <= 0:
-            raise ValueError("idPedido deve ser maior que zero.")
-
-        self.__idRestaurante = parsed
+        self.__idPedidos = self.__validar_id(value, "idPedido")
 
     @property
     def valorTotal(self):
-
         return self.__valorTotal
 
     @valorTotal.setter
     def valorTotal(self, value):
-        if not isinstance(value, str):
-            raise ValueError("valorTotal deve ser uma string.")
-
-        valorTotal = value.strip()
-        if len(valorTotal) < 3:
-            raise ValueError("valorTotal deve ter pelo menos 3 caracteres.")
-
-        self.__valorTotal = valorTotal
+        if isinstance(value, bool) or not isinstance(value, (int, float, str)):
+            raise ValueError("valorTotal deve ser um número positivo.")
+        numero = float(value)
+        if not isfinite(numero) or numero <= 0:
+            raise ValueError("valorTotal deve ser um número positivo.")
+        self.__valorTotal = numero
 
     @property
     def idCliente(self):
@@ -46,14 +44,7 @@ class Pedidos:
 
     @idCliente.setter
     def idCliente(self, value):
-        if not isinstance(value, str):
-            raise ValueError("idCliente deve ser uma string")
-
-        idCliente = value.strip()
-        if len(idCliente) < 3:
-            raise ValueError("idCliente deve ter mais de 3 caracteres")
-
-        self.__idCliente = idCliente
+        self.__idCliente = self.__validar_id(value, "idCliente")
 
     @property
     def idRestaurante(self):
@@ -61,10 +52,4 @@ class Pedidos:
 
     @idRestaurante.setter
     def idRestaurante(self, value):
-        if not isinstance(value, str):
-            raise ValueError("idRestaurante deve ser uma string")
-        idRestaurante = value.strip()
-        if len(idRestaurante) < 3:
-            raise ValueError("idRestaurante deve ter mais de 3 caracteres")
-
-        self.__idRestaurante = idRestaurante
+        self.__idRestaurante = self.__validar_id(value, "idRestaurante")
